@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "move_not_starred": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\c#\\move_not_starred"
+    }
+  }
+}
