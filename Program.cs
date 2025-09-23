@@ -55,13 +55,14 @@ class Program
                 var ifd0Directory = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
                 var xmpDirectory = directories.OfType<MetadataExtractor.Formats.Xmp.XmpDirectory>().FirstOrDefault();
                 int xmpRating = xmpDirectory.TryGetInt32(XmpDirectory.TagXmpValueCount, out int rating) ? rating : 0;
-                if (xmpRating >= MinimalRating)
+                if (xmpRating < MinimalRating)
                 {
                     moveRaw = true;
                 }
             }
             catch (NullReferenceException) {
-                // Ignore files that cannot be processed
+                // move raw files, for jpegs that cannot be processed
+                moveRaw = true;
             }
 
         }
@@ -71,6 +72,7 @@ class Program
     static void Main(string[] args)
     {
         string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        version = version.Replace(".0.0", "");
         Console.WriteLine("Move not starred C# v.{0}", version);
         bool dry_run = false;
         if (args.Contains("--dry-run"))

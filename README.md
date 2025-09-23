@@ -14,6 +14,7 @@ move_not_starred.exe --dry-run
 - [X] Filtering not starred files
 - [X] Moving RAW files to subfolder
 - [X] Dry run option
+- [ ] Add commandline parser ([CommandLineUtils](https://github.com/natemcmaster/CommandLineUtils) perhaps?)
 - [ ] Customizable picture and raw extensions
 - [ ] Unit tests?
 - [ ] Set release version as v0.1 etc. and print it in console
