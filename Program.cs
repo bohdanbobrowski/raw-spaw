@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Collections;
-
-class Program
+﻿class Program
 {
     static List<string> GetListOfRawFiles()
     {
@@ -62,11 +58,12 @@ class Program
         foreach (string rawFile in rawFiles)
         {
             string rawFileName = Path.GetFileNameWithoutExtension(rawFile);
-            string jpgFileName = rawFileName + ".JPG";  
+            string jpgFileName = rawFileName + ".JPG";
             if (ShouldIMoveRaw(jpgFileName))
             {
                 MoveRawFile(rawFile);
-            } else
+            }
+            else
             {
                 Console.WriteLine(rawFile);
             }
