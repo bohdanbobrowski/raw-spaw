@@ -5,3 +5,22 @@ C sharp implementation of this [python script](https://github.com/bohdanbobrowsk
 ## Usage
 ```bash
 move_not_starred.exe --dry-run
+```
+
+## Roadmap
+[X] Listing RAW files in folder
+[X] Creating subfolder if not exists
+[X] Reading EXIF ratings
+[X] Filtering not starred files
+[X] Moving RAW files to subfolder
+[X] Dry run option
+[ ] Customizable picture and raw extensions
+[ ] Unit tests?
+[ ] Set release version as v0.1 etc. and print it in console
+[ ] Release as one exe file
+[ ] Windows installer :-)
+[ ] Linux support?
+[ ] MacOS support?
+
+## License
+MIT License
