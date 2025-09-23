@@ -1,15 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
+		<Version>0.1</Version>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
 		<PublishSingleFile>true</PublishSingleFile>
-		<SelfContained>true</SelfContained>
+		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	</PropertyGroup>
-	
 	<ItemGroup>
-		<PackageReference Include="TagLibSharp" Version="2.3.0" />
+		<PackageReference Include="MetadataExtractor" Version="2.8.1" />
 	</ItemGroup>
-
 </Project>

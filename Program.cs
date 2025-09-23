@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
+using MetadataExtractor;
+using MetadataExtractor.Formats.Exif;
+using MetadataExtractor.Formats.Xmp;
 
 class Program
 {
     static List<string> GetListOfRawFiles()
     {
         List<string> rawFiles = new List<string>();
-        string path = Directory.GetCurrentDirectory();
+        string path = System.IO.Directory.GetCurrentDirectory();
         Console.WriteLine("Listing files in {0} folder", path);
-        string[] fileEntries = Directory.GetFiles(".");
+        string[] fileEntries = System.IO.Directory.GetFiles(".");
         foreach (string fileName in fileEntries)
         {
             if (fileName.EndsWith(".DNG"))
@@ -25,10 +28,10 @@ class Program
         string rawFileName = Path.GetFileNameWithoutExtension(rawFile);
         var dirName = new DirectoryInfo(".").Name;
         string destinationPath = Path.Combine(dirName, rawFileName + ".DNG");
-        if (!Directory.Exists(dirName))
+        if (!System.IO.Directory.Exists(dirName))
         {
             if (!dryRun)
-                Directory.CreateDirectory(dirName);
+                System.IO.Directory.CreateDirectory(dirName);
             Console.WriteLine("Create directory: {0}", dirName);
         }
         if (!dryRun)
@@ -45,17 +48,22 @@ class Program
         }
         else
         {
-            var imageFile = TagLib.File.Create(
-                jpgFileName
-            );
-            var tag = imageFile.Tag as TagLib.Image.CombinedImageTag;
-            if (tag is not null)
+
+            try
             {
-                if (tag.Rating >= MinimalRating)
+                IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(jpgFileName);
+                var ifd0Directory = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
+                var xmpDirectory = directories.OfType<MetadataExtractor.Formats.Xmp.XmpDirectory>().FirstOrDefault();
+                int xmpRating = xmpDirectory.TryGetInt32(XmpDirectory.TagXmpValueCount, out int rating) ? rating : 0;
+                if (xmpRating >= MinimalRating)
                 {
                     moveRaw = true;
                 }
             }
+            catch (NullReferenceException) {
+                // Ignore files that cannot be processed
+            }
+
         }
         return moveRaw;
     }
