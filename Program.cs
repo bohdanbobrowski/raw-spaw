@@ -1,4 +1,9 @@
-﻿class Program
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+
+class Program
 {
     static List<string> GetListOfRawFiles()
     {
@@ -54,6 +59,8 @@
 
     static void Main(string[] args)
     {
+        string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        Console.WriteLine("Move not starred C# v.{0}", version);
         List<string> rawFiles = GetListOfRawFiles();
         foreach (string rawFile in rawFiles)
         {

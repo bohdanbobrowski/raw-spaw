@@ -2,7 +2,8 @@
   "profiles": {
     "move_not_starred": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\c#\\move_not_starred"
+      "commandLineArgs": "--dry-run",
+      "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\move_not_starred"
     }
   }
 }
