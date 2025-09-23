@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Linq;
 
 class Program
 {
@@ -19,17 +20,19 @@ class Program
         return rawFiles;
     }
 
-    static void MoveRawFile(string rawFile)
+    static void MoveRawFile(string rawFile, bool dryRun = false)
     {
         string rawFileName = Path.GetFileNameWithoutExtension(rawFile);
         var dirName = new DirectoryInfo(".").Name;
         string destinationPath = Path.Combine(dirName, rawFileName + ".DNG");
         if (!Directory.Exists(dirName))
         {
-            Directory.CreateDirectory(dirName);
+            if (!dryRun)
+                Directory.CreateDirectory(dirName);
             Console.WriteLine("Create directory: {0}", dirName);
         }
-        File.Move(rawFile, destinationPath);
+        if (!dryRun)
+            File.Move(rawFile, destinationPath);
         Console.WriteLine("{0} -> {1}", rawFile, destinationPath);
     }
 
@@ -61,6 +64,12 @@ class Program
     {
         string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         Console.WriteLine("Move not starred C# v.{0}", version);
+        bool dry_run = false;
+        if (args.Contains("--dry-run"))
+        {
+            dry_run = true;
+            Console.WriteLine("Dry run mode enabled. No files will be moved.");
+        }
         List<string> rawFiles = GetListOfRawFiles();
         foreach (string rawFile in rawFiles)
         {
@@ -68,7 +77,7 @@ class Program
             string jpgFileName = rawFileName + ".JPG";
             if (ShouldIMoveRaw(jpgFileName))
             {
-                MoveRawFile(rawFile);
+                MoveRawFile(rawFile, dry_run);
             }
             else
             {
