@@ -23,13 +23,37 @@ class Program
         string rawFileName = Path.GetFileNameWithoutExtension(rawFile);
         var dirName = new DirectoryInfo(".").Name;
         string destinationPath = Path.Combine(dirName, rawFileName + ".DNG");
-        if (!Directory.Exists("raw"))
+        if (!Directory.Exists(dirName))
         {
-            // Directory.CreateDirectory("raw");
+            Directory.CreateDirectory(dirName);
             Console.WriteLine("Create directory: {0}", dirName);
         }
-        // File.Move(rawFile, destinationPath);
-        Console.WriteLine("Move {0} to {1}", rawFile, destinationPath);
+        File.Move(rawFile, destinationPath);
+        Console.WriteLine("{0} -> {1}", rawFile, destinationPath);
+    }
+
+    static bool ShouldIMoveRaw(string jpgFileName, int MinimalRating = 1)
+    {
+        bool moveRaw = false;
+        if (!File.Exists(jpgFileName))
+        {
+            moveRaw = true;
+        }
+        else
+        {
+            var imageFile = TagLib.File.Create(
+                jpgFileName
+            );
+            var tag = imageFile.Tag as TagLib.Image.CombinedImageTag;
+            if (tag is not null)
+            {
+                if (tag.Rating >= MinimalRating)
+                {
+                    moveRaw = true;
+                }
+            }
+        }
+        return moveRaw;
     }
 
     static void Main(string[] args)
@@ -37,19 +61,14 @@ class Program
         List<string> rawFiles = GetListOfRawFiles();
         foreach (string rawFile in rawFiles)
         {
-            bool moveRaw = false;
             string rawFileName = Path.GetFileNameWithoutExtension(rawFile);
-            if (!File.Exists(rawFileName + ".JPG"))
-            {
-                moveRaw = true;
-            } else
-            {
-                // TODO: read exif
-                Console.WriteLine("{0}.JPG exists", rawFileName);
-            }
-            if (moveRaw)
+            string jpgFileName = rawFileName + ".JPG";  
+            if (ShouldIMoveRaw(jpgFileName))
             {
                 MoveRawFile(rawFile);
+            } else
+            {
+                Console.WriteLine(rawFile);
             }
         }
     }
