@@ -9,5 +9,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="MetadataExtractor" Version="2.8.1" />
+		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 	</ItemGroup>
 </Project>

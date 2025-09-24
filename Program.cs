@@ -7,7 +7,7 @@ using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using MetadataExtractor.Formats.Xmp;
 
-class Program
+class move_not_starred
 {
     static List<string> GetListOfRawFiles()
     {
@@ -25,26 +25,25 @@ class Program
 
     static void MoveRawFile(string rawFile, bool dryRun = false)
     {
-        string rawFileName = Path.GetFileNameWithoutExtension(rawFile);
+        var rawFileName = Path.GetFileNameWithoutExtension(rawFile);
         var dirName = new DirectoryInfo(".").Name;
-        string destinationPath = Path.Combine(dirName, rawFileName + ".DNG");
-        if (!System.IO.Directory.Exists(dirName))
+        var destinationPath = Path.Combine(dirName, rawFileName + ".DNG");
+        if (!System.IO.Directory.Exists(dirName) & !dryRun)
         {
-            if (!dryRun)
-                System.IO.Directory.CreateDirectory(dirName);
             Console.WriteLine("Create directory: {0}", dirName);
+            System.IO.Directory.CreateDirectory(dirName);
         }
         if (!dryRun)
             File.Move(rawFile, destinationPath);
         Console.WriteLine("{0} -> {1}", rawFile, destinationPath);
     }
 
-    static bool ShouldIMoveRaw(string jpgFileName, int MinimalRating = 1)
+    static bool ShouldIMoveRaw(string jpgFileName, int minimalRating = 1)
     {
-        bool moveRaw = false;
         if (!File.Exists(jpgFileName))
         {
-            moveRaw = true;
+            Console.WriteLine("True 46");
+            return true;
         }
         else
         {
@@ -52,34 +51,56 @@ class Program
             try
             {
                 IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(jpgFileName);
-                var ifd0Directory = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
+                var ifd0Directory = directories.OfType<MetadataExtractor.Formats.Exif.ExifIfd0Directory>().FirstOrDefault();
+                var ifd0Rating = ifd0Directory.TryGetInt32(ExifIfd0Directory.TagRating, out var iRating) ? iRating : 0;
+                var exifDirectory = directories.OfType<MetadataExtractor.Formats.Exif.ExifDirectoryBase>().FirstOrDefault();
+                var exifRating = exifDirectory.TryGetInt32(ExifDirectoryBase.TagRating, out var eRating) ? eRating : 0;
                 var xmpDirectory = directories.OfType<MetadataExtractor.Formats.Xmp.XmpDirectory>().FirstOrDefault();
-                int xmpRating = xmpDirectory.TryGetInt32(XmpDirectory.TagXmpValueCount, out int rating) ? rating : 0;
-                if (xmpRating < MinimalRating)
+                var xmpRating = xmpDirectory.TryGetInt32(XmpDirectory.TagXmpValueCount, out var xRating) ? xRating : 0;
+                
+                var taglibRating = 0;
+                try
                 {
-                    moveRaw = true;
+                    var tfile = TagLib.File.Create(jpgFileName);
+                    var image = tfile as TagLib.Image.File;
+                    taglibRating = (int)image.ImageTag.Rating;
+                }
+                catch (NotImplementedException)
+                {
+
+                }
+                
+                Console.WriteLine("{0} -> {1}, {2}, {3}, {4}", jpgFileName, exifRating, xmpRating, ifd0Rating, taglibRating);
+                // Console.WriteLine("---------------------------------------------------------------------------------------------------------------");
+                // foreach (var directory in directories)
+                //     foreach (var tag in directory.Tags)
+                //         Console.WriteLine($"     {directory.Name} - {tag.Name} = {tag.Description};");
+                if (exifRating < minimalRating)
+                {
+                    return true;
                 }
             }
             catch (NullReferenceException) {
                 // move raw files, for jpegs that cannot be processed
-                moveRaw = true;
+                return true;
             }
 
         }
-        return moveRaw;
+        return false;
     }
 
     static void Main(string[] args)
     {
-        string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        version = version.Replace(".0.0", "");
+        var version = Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
         Console.WriteLine("Move not starred C# v.{0}", version);
-        bool dry_run = false;
+        var dryRun = false;
         if (args.Contains("--dry-run"))
         {
-            dry_run = true;
+            dryRun = true;
             Console.WriteLine("Dry run mode enabled. No files will be moved.");
         }
+
+        var filesMoved = 0;
         List<string> rawFiles = GetListOfRawFiles();
         foreach (string rawFile in rawFiles)
         {
@@ -87,12 +108,14 @@ class Program
             string jpgFileName = rawFileName + ".JPG";
             if (ShouldIMoveRaw(jpgFileName))
             {
-                MoveRawFile(rawFile, dry_run);
+                MoveRawFile(rawFile, dryRun);
+                filesMoved += 1;
             }
             else
             {
                 Console.WriteLine(rawFile);
             }
         }
+        Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
     }
 }
