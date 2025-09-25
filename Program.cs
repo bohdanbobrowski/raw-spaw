@@ -7,7 +7,7 @@ using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using MetadataExtractor.Formats.Xmp;
 
-class move_not_starred
+class raw_spaw
 {
     static List<string> GetListOfRawFiles()
     {
@@ -20,6 +20,7 @@ class move_not_starred
             if (fileName.EndsWith(".DNG"))
                 rawFiles.Add(fileName);
         }
+
         return rawFiles;
     }
 
@@ -33,6 +34,7 @@ class move_not_starred
             Console.WriteLine("Create directory: {0}", dirName);
             System.IO.Directory.CreateDirectory(dirName);
         }
+
         if (!dryRun)
             File.Move(rawFile, destinationPath);
         Console.WriteLine("{0} -> {1}", rawFile, destinationPath);
@@ -42,56 +44,46 @@ class move_not_starred
     {
         if (!File.Exists(jpgFileName))
         {
-            Console.WriteLine("True 46");
             return true;
         }
-        else
+
+        var exifRating = 0;
+        try
+        {
+            var tfile = TagLib.File.Create(jpgFileName);
+            var image = tfile as TagLib.Image.File;
+            exifRating = (int)image.ImageTag.Rating;
+        }
+        catch (NotImplementedException)
+        {
+            Console.WriteLine(jpgFileName + " is not ranked");
+            return true;
+        }
+
+        Console.WriteLine("{0} {1}", jpgFileName, GetStars(exifRating))  ;
+        if (exifRating < minimalRating)
         {
 
-            try
-            {
-                IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(jpgFileName);
-                var ifd0Directory = directories.OfType<MetadataExtractor.Formats.Exif.ExifIfd0Directory>().FirstOrDefault();
-                var ifd0Rating = ifd0Directory.TryGetInt32(ExifIfd0Directory.TagRating, out var iRating) ? iRating : 0;
-                var exifDirectory = directories.OfType<MetadataExtractor.Formats.Exif.ExifDirectoryBase>().FirstOrDefault();
-                var exifRating = exifDirectory.TryGetInt32(ExifDirectoryBase.TagRating, out var eRating) ? eRating : 0;
-                var xmpDirectory = directories.OfType<MetadataExtractor.Formats.Xmp.XmpDirectory>().FirstOrDefault();
-                var xmpRating = xmpDirectory.TryGetInt32(XmpDirectory.TagXmpValueCount, out var xRating) ? xRating : 0;
-                
-                var taglibRating = 0;
-                try
-                {
-                    var tfile = TagLib.File.Create(jpgFileName);
-                    var image = tfile as TagLib.Image.File;
-                    taglibRating = (int)image.ImageTag.Rating;
-                }
-                catch (NotImplementedException)
-                {
-
-                }
-                
-                Console.WriteLine("{0} -> {1}, {2}, {3}, {4}", jpgFileName, exifRating, xmpRating, ifd0Rating, taglibRating);
-                // Console.WriteLine("---------------------------------------------------------------------------------------------------------------");
-                // foreach (var directory in directories)
-                //     foreach (var tag in directory.Tags)
-                //         Console.WriteLine($"     {directory.Name} - {tag.Name} = {tag.Description};");
-                if (exifRating < minimalRating)
-                {
-                    return true;
-                }
-            }
-            catch (NullReferenceException) {
-                // move raw files, for jpegs that cannot be processed
-                return true;
-            }
-
+            return true;
         }
+
         return false;
+    }
+
+    static string GetStars(int count, int range = 5)
+    {
+        var starsString = "";
+        for (int index=1; index<=count; index++)
+        {
+            starsString += " ☆";
+        }
+        return starsString; 
     }
 
     static void Main(string[] args)
     {
         var version = Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.WriteLine("Move not starred C# v.{0}", version);
         var dryRun = false;
         if (args.Contains("--dry-run"))
@@ -110,10 +102,6 @@ class move_not_starred
             {
                 MoveRawFile(rawFile, dryRun);
                 filesMoved += 1;
-            }
-            else
-            {
-                Console.WriteLine(rawFile);
             }
         }
         Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);

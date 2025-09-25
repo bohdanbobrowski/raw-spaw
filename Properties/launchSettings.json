@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "move_not_starred": {
+    "raw_spaw": {
       "commandName": "Project",
       "commandLineArgs": "--dry-run",
-      "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\move_not_starred"
+      "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\raw_spaw"
     }
   }
 }
