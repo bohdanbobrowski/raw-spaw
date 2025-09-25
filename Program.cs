@@ -47,6 +47,11 @@ internal class raw_spaw
             var image = tfile as TagLib.Image.File;
             exifRating = (int)image.ImageTag.Rating;
         }
+        catch (InvalidOperationException)
+        {
+            Console.WriteLine(jpgFileName + " is not ranked");
+            return true;
+        }
         catch (NotImplementedException)
         {
             Console.WriteLine(jpgFileName + " is not ranked");
