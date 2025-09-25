@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<Version>0.1</Version>
+		<Version>0.2</Version>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
 		<PublishSingleFile>true</PublishSingleFile>
 		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<Title>Raw Spaw</Title>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="MetadataExtractor" Version="2.8.1" />
