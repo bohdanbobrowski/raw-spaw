@@ -72,11 +72,26 @@ internal class raw_spaw
         return starsString;
     }
 
+    private static string Version()
+    {
+        var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        while (version.EndsWith(".0"))
+        {
+            version = version.Substring(0, version.Length - 2);
+        }
+
+        return version;
+    }
+
+    private static void PrintInformation()
+    {
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.WriteLine("Move not starred C# v.{0}", Version());
+    }
+
     private static void Main(string[] args)
     {
-        var version = Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
-        Console.OutputEncoding = Encoding.UTF8;
-        Console.WriteLine("Move not starred C# v.{0}", version);
+        PrintInformation();
         var dryRun = false;
         if (args.Contains("--dry-run"))
         {
