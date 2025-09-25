@@ -1,8 +1,13 @@
 {
   "profiles": {
-    "raw_spaw": {
+    "raw_spaw --dry-run": {
       "commandName": "Project",
       "commandLineArgs": "--dry-run",
+      "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\raw_spaw"
+    },
+    "raw_spaw --help": {
+      "commandName": "Project",
+      "commandLineArgs": "--help",
       "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\raw_spaw"
     }
   }

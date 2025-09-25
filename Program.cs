@@ -89,11 +89,32 @@ internal class raw_spaw
         Console.WriteLine("Move not starred C# v.{0}", Version());
     }
 
+    private static void PrintHelp()
+    {
+        Console.WriteLine(@"usage: raw_spaw [-h] [-d] [-p PICTURE_EXTENSION] [-r RAW_EXTENSION] [-t TARGET]
+Move raw files for jpegs that are not starred to subfolder. Requires exiftool.
+    options:
+-h, --help            show this help message and exit
+-d, --dry-run         Dry run.
+-p PICTURE_EXTENSION, --picture_extension PICTURE_EXTENSION
+    Picture file extension (by default JPG).
+-r RAW_EXTENSION, --raw_extension RAW_EXTENSION
+    RAW file extension (by default DNG).
+-t TARGET, --target TARGET
+    Target path (by default creates sub folder with the same name as current one).
+");
+    }
+
     private static void Main(string[] args)
     {
         PrintInformation();
         var dryRun = false;
-        if (args.Contains("--dry-run"))
+        if (args.Contains("-h") || args.Contains("--help"))
+        {
+            PrintHelp();
+            return;
+        }
+        if (args.Contains("-d") || args.Contains("--dry-run"))
         {
             dryRun = true;
             Console.WriteLine("Dry run mode enabled. No files will be moved.");
