@@ -26,7 +26,7 @@ Move raw files for jpegs that are not starred to subfolder. Requires exiftool.
 - [X] Dry run option
 - [X] Release as one exe file
 - [X] Set release version number and print it in console
-- [ ] Add commandline parser ([CommandLineUtils](https://github.com/natemcmaster/CommandLineUtils) perhaps?)
+- [ ] Add commandline parser ([CommandLineUtils](https://github.com/natemcmaster/CommandLineUtils), [commandline](https://github.com/commandlineparser/commandline)...?) 
 - [ ] Customizable picture and raw extensions
 - [ ] Customizable target path
 - [ ] Unit tests?
