@@ -2,13 +2,16 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="135.63365mm"
-   height="140.29829mm"
-   viewBox="0 0 135.63365 140.29829"
+   width="125mm"
+   height="125mm"
+   viewBox="0 0 125 125"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (ebf0e94, 2025-05-08)"
    sodipodi:docname="RawSpaw_logo.svg"
+   inkscape:export-filename="RawSpaw_logo.png"
+   inkscape:export-xdpi="203.2"
+   inkscape:export-ydpi="203.2"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,8 +27,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="1.6168981"
-     inkscape:cx="334.59127"
-     inkscape:cy="513.01933"
+     inkscape:cx="307.68791"
+     inkscape:cy="485.18828"
      inkscape:window-width="3840"
      inkscape:window-height="2054"
      inkscape:window-x="-11"
@@ -40,54 +43,16 @@
        width="374.17322"
        height="237.49178"
        id="rect1" />
-    <filter
-       style="color-interpolation-filters:sRGB"
-       inkscape:label="Drop Shadow"
-       id="filter4"
-       x="-0.06248175"
-       y="-0.060050896"
-       width="1.1770316"
-       height="1.1701442">
-      <feFlood
-         result="flood"
-         in="SourceGraphic"
-         flood-opacity="0.498039"
-         flood-color="rgb(0,0,0)"
-         id="feFlood3" />
-      <feGaussianBlur
-         result="blur"
-         in="SourceGraphic"
-         stdDeviation="3.000000"
-         id="feGaussianBlur3" />
-      <feOffset
-         result="offset"
-         in="blur"
-         dx="6.000000"
-         dy="6.000000"
-         id="feOffset3" />
-      <feComposite
-         result="comp1"
-         operator="in"
-         in="flood"
-         in2="offset"
-         id="feComposite3" />
-      <feComposite
-         result="comp2"
-         operator="over"
-         in="SourceGraphic"
-         in2="comp1"
-         id="feComposite4" />
-    </filter>
   </defs>
   <g
      inkscape:label="Warstwa 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-16.57087,-12.755434)">
+     transform="translate(-23.77087,-19.955435)">
     <g
        id="g2"
        style="filter:url(#filter4)"
-       transform="translate(-0.49090909,-38.618182)">
+       transform="translate(9.2754434,-36.067329)">
       <path
          sodipodi:type="star"
          style="fill:#ffd42a;stroke-width:0.264583"

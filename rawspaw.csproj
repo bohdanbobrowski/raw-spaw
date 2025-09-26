@@ -10,6 +10,7 @@
 		<Authors>Bohdan Bobrowski</Authors>
 		<Description>Move RAW files for low or not ranked JPEG's to subfolder.</Description>
 		<PackageProjectUrl>https://github.com/bohdanbobrowski/raw-spaw</PackageProjectUrl>
+		<ApplicationIcon>Assets\RawSpaw.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="CommandLineParser" Version="2.9.1" />
