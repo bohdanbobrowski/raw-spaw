@@ -1,4 +1,4 @@
-<img src="Assets/RawSpaw_logo_web.png" width="300" />
+<img src="Assets/RawSpaw_logo_web.svg" width="300" />
 
 # Raw-Spaw!
 
