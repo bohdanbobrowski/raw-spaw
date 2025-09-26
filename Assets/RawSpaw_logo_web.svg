@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="135.63365mm"
+   height="140.29829mm"
+   viewBox="0 0 135.63365 140.29829"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e94, 2025-05-08)"
+   sodipodi:docname="RawSpaw_logo_web.svg"
+   inkscape:export-filename="RawSpaw_logo_web.png"
+   inkscape:export-xdpi="181.04282"
+   inkscape:export-ydpi="181.04282"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.6168981"
+     inkscape:cx="334.28203"
+     inkscape:cy="513.01933"
+     inkscape:window-width="3840"
+     inkscape:window-height="2054"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <rect
+       x="110.08733"
+       y="275.21832"
+       width="374.17322"
+       height="237.49178"
+       id="rect1" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter4"
+       x="-0.2756386"
+       y="-0.89108029"
+       width="1.780976"
+       height="3.5247275">
+      <feFlood
+         result="flood"
+         in="SourceGraphic"
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         id="feFlood3" />
+      <feGaussianBlur
+         result="blur"
+         in="SourceGraphic"
+         stdDeviation="3.000000"
+         id="feGaussianBlur3" />
+      <feOffset
+         result="offset"
+         in="blur"
+         dx="6.000000"
+         dy="6.000000"
+         id="feOffset3" />
+      <feComposite
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset"
+         id="feComposite3" />
+      <feComposite
+         result="comp2"
+         operator="over"
+         in="SourceGraphic"
+         in2="comp1"
+         id="feComposite4" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Warstwa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-16.57087,-12.755434)">
+    <path
+       sodipodi:type="star"
+       style="fill:#ffd42a;stroke-width:0.264583;filter:url(#filter4)"
+       id="path1"
+       inkscape:flatsided="false"
+       sodipodi:sides="5"
+       sodipodi:cx="63.981819"
+       sodipodi:cy="132.70909"
+       sodipodi:r1="58.353058"
+       sodipodi:r2="29.176529"
+       sodipodi:arg1="1.2836371"
+       sodipodi:arg2="1.9119556"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 80.509093,188.67273 -26.28915,-28.46863 -38.355496,5.51708 18.951477,-33.79976 -17.09955,-34.773374 38.001807,7.579224 27.787393,-27.008199 4.534931,38.483979 34.273105,18.08138 -35.199068,16.20518 z"
+       inkscape:transform-center-x="-5.1072081"
+       inkscape:transform-center-y="0.48680815"
+       transform="translate(16.690909,-57.763636)" />
+    <path
+       style="font-weight:bold;font-family:Cambria;-inkscape-font-specification:'Cambria Bold';white-space:pre;fill:#0000ff;filter:url(#filter4)"
+       d="m 113.72656,286.13725 h -3.07617 v -0.38672 q 0.2168,-0.0586 0.33984,-0.12304 0.12891,-0.0703 0.1875,-0.1875 0.0645,-0.12305 0.082,-0.30469 0.0176,-0.1875 0.0176,-0.46875 v -5.05078 q 0,-0.27539 -0.0176,-0.46289 -0.0117,-0.1875 -0.0762,-0.30469 -0.0586,-0.11719 -0.1875,-0.1875 -0.12304,-0.0762 -0.3457,-0.13477 v -0.38671 h 3.41602 q 0.6914,0 1.17187,0.0996 0.48633,0.0937 0.84961,0.29297 0.30469,0.16407 0.51563,0.41602 0.21093,0.24609 0.32226,0.58008 0.11719,0.32812 0.11719,0.76758 0,0.57421 -0.20508,0.98437 -0.19922,0.41016 -0.54492,0.68555 -0.33984,0.26953 -0.91406,0.50976 v 0.0586 q 0.43359,0.1875 0.71484,0.5039 0.28711,0.31055 0.51563,0.79102 l 0.36914,0.79687 q 0.24609,0.53321 0.48632,0.80274 0.2461,0.26367 0.58008,0.32226 v 0.38672 h -2.25586 q -0.33984,-0.46875 -0.76758,-1.39453 l -0.45703,-1.00195 q -0.20507,-0.44531 -0.35156,-0.63281 -0.14648,-0.1875 -0.30469,-0.25782 -0.15234,-0.0703 -0.47461,-0.0703 h -0.33984 v 1.88672 q 0,0.43945 0.041,0.61523 0.041,0.17578 0.1582,0.28125 0.11719,0.10547 0.43359,0.1875 z m -0.63281,-7.30078 v 3.25781 h 0.58008 q 0.46875,0 0.77344,-0.12304 0.30468,-0.12891 0.48046,-0.35157 0.18165,-0.22851 0.2461,-0.5332 0.0703,-0.30469 0.0703,-0.66797 0,-0.79687 -0.375,-1.19531 -0.375,-0.39844 -1.11328,-0.39844 -0.50391,0 -0.66211,0.0117 z m 9.66211,4.82227 h -2.50195 l -0.19336,0.55664 q -0.082,0.23437 -0.13477,0.45703 -0.0527,0.2168 -0.0527,0.46289 0,0.57422 0.60937,0.61523 v 0.38672 h -2.50195 v -0.38672 q 0.2168,-0.0234 0.38086,-0.15234 0.16406,-0.12891 0.29883,-0.35156 0.13476,-0.22266 0.28711,-0.63867 l 2.44336,-6.50977 h 1.56445 l 1.93359,6.5625 q 0.12891,0.43945 0.2168,0.62695 0.0879,0.18164 0.22851,0.29883 0.14063,0.11133 0.39258,0.16406 v 0.38672 h -3.23437 v -0.38672 q 0.30469,-0.0352 0.45117,-0.16992 0.14648,-0.13476 0.14648,-0.38086 0,-0.18164 -0.041,-0.40429 -0.041,-0.22266 -0.13477,-0.5625 z m -2.2793,-0.68555 h 2.10938 l -0.9375,-3.29883 z m 14.25,-2.82422 q 0.082,-0.26953 0.14063,-0.53906 0.0586,-0.27539 0.0586,-0.46875 0,-0.30469 -0.15234,-0.44531 -0.14649,-0.14649 -0.44532,-0.16993 v -0.38671 h 2.44336 v 0.38671 q -0.21679,0.0469 -0.36328,0.16993 -0.14648,0.11718 -0.26367,0.33398 -0.11719,0.2168 -0.29297,0.72656 l -2.19726,6.42188 h -1.39453 l -1.32422,-5.50196 -1.57032,5.50196 h -1.46484 l -1.76367,-6.5625 q -0.12891,-0.48047 -0.22852,-0.66797 -0.0996,-0.1875 -0.22265,-0.28125 -0.12305,-0.0937 -0.31055,-0.14063 v -0.38671 h 3.15234 v 0.38671 q -0.30468,0.0352 -0.45117,0.16993 -0.14648,0.13476 -0.14648,0.38086 0,0.31054 0.16992,0.96679 l 1.01367,4.07227 1.68164,-5.97656 h 1.32422 l 1.37109,5.97656 z"
+       id="text1"
+       transform="matrix(2.7967617,0,0,8.4426086,-284.9823,-2298.9649)"
+       aria-label="RAW" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.4px;font-family:Cambria;-inkscape-font-specification:'Cambria Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#0000ff;stroke-width:0.264583;filter:url(#filter4)"
+       x="15.74442"
+       y="178.74342"
+       id="text2"
+       transform="rotate(-2.8354663,-780.43714,-9.3914001)"><tspan
+         sodipodi:role="line"
+         id="tspan2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.4px;font-family:'Comic Sans MS';-inkscape-font-specification:'Comic Sans MS Bold';fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+         x="15.74442"
+         y="178.74342">SPAW!</tspan></text>
+  </g>
+</svg>
