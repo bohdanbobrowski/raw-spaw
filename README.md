@@ -1,10 +1,10 @@
-# Raw Spaw
+# Raw-Spaw!
 
 C sharp implementation of this [python script](https://github.com/bohdanbobrowski/python_toolbox?tab=readme-ov-file#move_not_starred).
 
 ## Usage
 ```bash
-raw_spaw [-h] [-d] [-p PICTURE_EXTENSION] [-r RAW_EXTENSION] [-t TARGET]
+rawspaw [-h] [-d] [-p PICTURE_EXTENSION] [-r RAW_EXTENSION] [-t TARGET]
 Move raw files for jpegs that are not starred to subfolder. Requires exiftool.
     options:
 -h, --help            show this help message and exit

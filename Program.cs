@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-internal class raw_spaw
+internal class RawSpaw
 {
     private static List<string> GetListOfRawFiles()
     {
@@ -91,7 +91,7 @@ internal class raw_spaw
 
     private static void PrintHelp()
     {
-        Console.WriteLine(@"usage: raw_spaw [-h] [-d] [-p PICTURE_EXTENSION] [-r RAW_EXTENSION] [-t TARGET]
+        Console.WriteLine(@"usage: rawspaw [-h] [-d] [-p PICTURE_EXTENSION] [-r RAW_EXTENSION] [-t TARGET]
 Move raw files for jpegs that are not starred to subfolder. Requires exiftool.
     options:
 -h, --help            show this help message and exit

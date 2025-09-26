@@ -7,6 +7,7 @@
 		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<Title>Raw Spaw</Title>
+		<RootNamespace>raw_spaw</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="MetadataExtractor" Version="2.8.1" />
