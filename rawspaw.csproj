@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<Version>0.2.1</Version>
+		<Version>0.3.0</Version>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
 		<PublishSingleFile>true</PublishSingleFile>
 		<SelfContained>false</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<Title>Raw Spaw</Title>
-		<RootNamespace>raw_spaw</RootNamespace>
+		<Title>Raw-Spaw</Title>
+		<Authors>Bohdan Bobrowski</Authors>
+		<Description>Move RAW files for low or not ranked JPEG's to subfolder.</Description>
+		<PackageProjectUrl>https://github.com/bohdanbobrowski/raw-spaw</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="MetadataExtractor" Version="2.8.1" />
