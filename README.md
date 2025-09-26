@@ -1,3 +1,5 @@
+<img src="Assets/RawSpaw_logo_web.png" width="300" />
+
 # Raw-Spaw!
 
 C sharp implementation of this [python script](https://github.com/bohdanbobrowski/python_toolbox?tab=readme-ov-file#move_not_starred).
