@@ -4,6 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using MetadataExtractor;
+using MetadataExtractor.Formats.Exif;
+using MetadataExtractor.Formats.Xmp;
+using Directory = System.IO.Directory;
 
 internal class RawSpaw
 {
@@ -36,6 +40,21 @@ internal class RawSpaw
         Console.WriteLine("{0} -> {1}", rawFile, destinationPath);
     }
 
+    private static int GetRatingWithTagLib(string jpgFileName)
+    {
+        var tfile = TagLib.File.Create(jpgFileName);
+        var image = tfile as TagLib.Image.File;
+        return (int)image.ImageTag.Rating;
+    }
+
+    private static int GetRatingWithMetadataExtractor(string jpgFileName)
+    {
+        IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(jpgFileName);
+        var exifDirectory = directories.OfType<MetadataExtractor.Formats.Exif.ExifDirectoryBase>().FirstOrDefault();
+        var exifRating = exifDirectory.TryGetInt32(ExifDirectoryBase.TagRating, out var eRating) ? eRating : 0;
+        return exifRating == null ? 0 : exifRating;
+    }
+
     private static bool ShouldIMoveRaw(string jpgFileName, int minimalRating = 1)
     {
         if (!File.Exists(jpgFileName)) return true;
@@ -43,9 +62,8 @@ internal class RawSpaw
         var exifRating = 0;
         try
         {
-            var tfile = TagLib.File.Create(jpgFileName);
-            var image = tfile as TagLib.Image.File;
-            exifRating = (int)image.ImageTag.Rating;
+            exifRating = GetRatingWithMetadataExtractor(jpgFileName); 
+            // exifRating = GetRatingWithTagLib(jpgFileName);
         }
         catch (InvalidOperationException)
         {
