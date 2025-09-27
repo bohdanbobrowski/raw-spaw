@@ -366,3 +366,5 @@ FodyWeavers.xsd
 *.jpeg
 *.dng
 *.exe
+
+./test_pack*

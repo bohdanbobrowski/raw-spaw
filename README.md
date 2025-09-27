@@ -4,6 +4,8 @@
 
 C sharp implementation of this [python script](https://github.com/bohdanbobrowski/python_toolbox?tab=readme-ov-file#move_not_starred).
 
+It helps to minimize size of images folder, by moving RAW's for not ranked and ranked less than 1 star JPEG's to subfolder. 
+
 ## Usage
 ```bash
 rawspaw [-h] [-d] [-p PICTURE_EXTENSION] [-r RAW_EXTENSION] [-t TARGET]
