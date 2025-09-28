@@ -21,6 +21,11 @@ Move raw files for jpegs that are not starred to subfolder. Requires exiftool.
     Target path (by default creates sub folder with the same name as current one).
 ```
 
+## Libraries used
+
+1. [MetadataExtractor](https://github.com/drewnoakes/metadata-extractor-dotnet)
+2. [TagLib](https://github.com/mono/taglib-sharp) - in cases where MetadataExtractor fails (more testing needed)
+
 ## Roadmap
 - [X] Listing RAW files in folder
 - [X] Creating subfolder if not exists
@@ -33,9 +38,9 @@ Move raw files for jpegs that are not starred to subfolder. Requires exiftool.
 - [ ] Add commandline parser ([CommandLineUtils](https://github.com/natemcmaster/CommandLineUtils), [commandline](https://github.com/commandlineparser/commandline)...?) 
 - [ ] Customizable picture and raw extensions
 - [ ] Customizable target path
-- [ ] Unit tests?
-- [ ] Windows installer :-)
-- [ ] Linux support?
+- [ ] Automatic tests?
+- [ ] Windows installer?
+- [ ] Linux support and package
 - [ ] MacOS support?
 
 ## License

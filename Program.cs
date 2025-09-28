@@ -40,13 +40,6 @@ internal class RawSpaw
         Console.WriteLine("{0} -> {1}", rawFile, destinationPath);
     }
 
-    private static int GetRatingWithTagLib(string jpgFileName)
-    {
-        var tfile = TagLib.File.Create(jpgFileName);
-        var image = tfile as TagLib.Image.File;
-        return (int)image.ImageTag.Rating;
-    }
-
     private static int GetRatingWithMetadataExtractor(string jpgFileName)
     {
         IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(jpgFileName);
@@ -55,31 +48,38 @@ internal class RawSpaw
         return exifRating == null ? 0 : exifRating;
     }
 
+    private static int GetRatingWithTagLib(string jpgFileName)
+    {
+        // In some cases (needs deeper debugging) MetadataExtractor fails to get picture rating, so I'm helping myself
+        // with TagLib.
+        var tfile = TagLib.File.Create(jpgFileName);
+        var image = tfile as TagLib.Image.File;
+        return (int)image.ImageTag.Rating;
+    }
+
     private static bool ShouldIMoveRaw(string jpgFileName, int minimalRating = 1)
     {
         if (!File.Exists(jpgFileName)) return true;
-
         var exifRating = 0;
         try
         {
-            exifRating = GetRatingWithMetadataExtractor(jpgFileName); 
-            // exifRating = GetRatingWithTagLib(jpgFileName);
+            exifRating = GetRatingWithMetadataExtractor(jpgFileName);
         }
         catch (InvalidOperationException)
         {
-            Console.WriteLine(jpgFileName + " is not ranked");
-            return true;
-        }
-        catch (NotImplementedException)
-        {
-            Console.WriteLine(jpgFileName + " is not ranked");
-            return true;
+            try
+            {
+                exifRating = GetRatingWithTagLib(jpgFileName);
+            }
+            catch (NotImplementedException)
+            {
+                Console.WriteLine(jpgFileName + " is not ranked");
+                return true;
+            }
         }
 
         Console.WriteLine("{0} {1}", jpgFileName, GetStars(exifRating));
-        if (exifRating < minimalRating) return true;
-
-        return false;
+        return exifRating < minimalRating;
     }
 
     private static string GetStars(int count, int range = 5)
@@ -132,6 +132,7 @@ Move raw files for jpegs that are not starred to subfolder. Requires exiftool.
             PrintHelp();
             return;
         }
+
         if (args.Contains("-d") || args.Contains("--dry-run"))
         {
             dryRun = true;
