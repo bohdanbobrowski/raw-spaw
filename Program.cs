@@ -6,38 +6,51 @@ using System.Reflection;
 using System.Text;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
-using MetadataExtractor.Formats.Xmp;
 using Directory = System.IO.Directory;
+using CommandLine;
+
+
+public class RawSpawOptions
+{
+    [Option('d', "dry-run", Required = false, Default = false, HelpText = "Dry run."),]
+    public bool DryRun { get; set; }
+
+    [Option('p', "picture-extension", Required = false, Default = "JPG", HelpText = "Picture file extension."),]
+    public string PictureExtension { get; set; }
+
+    [Option('r', "raw-extension", Required = false, Default = "DNG", HelpText = "RAW file extension."),]
+    public string RawExtension { get; set; }
+
+    [Option('t', "target", Required = false, Default = ".", HelpText = "Target path."),]
+    public string Target { get; set; }
+}
 
 internal class RawSpaw
 {
-    private static List<string> GetListOfRawFiles()
+    private static List<string> GetListOfRawFiles(string rawExtension = "DNG")
     {
-        var rawFiles = new List<string>();
         var path = Directory.GetCurrentDirectory();
         Console.WriteLine("Listing files in {0} folder", path);
         var fileEntries = Directory.GetFiles(".");
-        foreach (var fileName in fileEntries)
-            if (fileName.EndsWith(".DNG"))
-                rawFiles.Add(fileName);
-
-        return rawFiles;
+        
+        return fileEntries.Where(fileName => fileName.ToUpper().EndsWith("." + rawExtension.ToUpper())).ToList();
     }
 
-    private static void MoveRawFile(string rawFile, bool dryRun = false)
+    private static void MoveRawFile(string rawFile, bool dryRun = false, string target = ".")
     {
-        var rawFileName = Path.GetFileNameWithoutExtension(rawFile);
         var dirName = new DirectoryInfo(".").Name;
-        var destinationPath = Path.Combine(dirName, rawFileName + ".DNG");
-        if (!Directory.Exists(dirName) & !dryRun)
+        string[] paths = [target, dirName];
+        var targetDir = Path.Combine(paths);
+        var destinationPath = Path.Combine(targetDir, rawFile);
+        if (!Directory.Exists(targetDir) & !dryRun)
         {
-            Console.WriteLine("Create directory: {0}", dirName);
-            Directory.CreateDirectory(dirName);
+            Console.WriteLine("Create directory: {0}", targetDir);
+            Directory.CreateDirectory(targetDir);
         }
 
         if (!dryRun)
             File.Move(rawFile, destinationPath);
-        Console.WriteLine("{0} -> {1}", rawFile, destinationPath);
+        Console.Write("{0} -> {1}\n", rawFile, destinationPath);
     }
 
     private static int GetRatingWithMetadataExtractor(string jpgFileName)
@@ -78,11 +91,17 @@ internal class RawSpaw
             }
         }
 
-        Console.WriteLine("{0} {1}", jpgFileName, GetStars(exifRating));
-        return exifRating < minimalRating;
+        Console.Write("{0}\t{1}", jpgFileName, GetStars(exifRating));
+        if (exifRating < minimalRating)
+        {
+            return true;
+        }
+
+        Console.Write("\n");
+        return false;
     }
 
-    private static string GetStars(int count, int range = 5)
+    private static string GetStars(int count)
     {
         var starsString = "";
         for (var index = 1; index <= count; index++) starsString += " ☆";
@@ -90,68 +109,29 @@ internal class RawSpaw
         return starsString;
     }
 
-    private static string Version()
-    {
-        var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        while (version.EndsWith(".0"))
-        {
-            version = version.Substring(0, version.Length - 2);
-        }
-
-        return version;
-    }
-
-    private static void PrintInformation()
-    {
-        Console.OutputEncoding = Encoding.UTF8;
-        Console.WriteLine("Move not starred C# v.{0}", Version());
-    }
-
-    private static void PrintHelp()
-    {
-        Console.WriteLine(@"usage: rawspaw [-h] [-d] [-p PICTURE_EXTENSION] [-r RAW_EXTENSION] [-t TARGET]
-Move raw files for jpegs that are not starred to subfolder. Requires exiftool.
-    options:
--h, --help            show this help message and exit
--d, --dry-run         Dry run.
--p PICTURE_EXTENSION, --picture_extension PICTURE_EXTENSION
-    Picture file extension (by default JPG).
--r RAW_EXTENSION, --raw_extension RAW_EXTENSION
-    RAW file extension (by default DNG).
--t TARGET, --target TARGET
-    Target path (by default creates sub folder with the same name as current one).
-");
-    }
-
     private static void Main(string[] args)
     {
-        PrintInformation();
-        var dryRun = false;
-        if (args.Contains("-h") || args.Contains("--help"))
-        {
-            PrintHelp();
-            return;
-        }
-
-        if (args.Contains("-d") || args.Contains("--dry-run"))
-        {
-            dryRun = true;
-            Console.WriteLine("Dry run mode enabled. No files will be moved.");
-        }
-
-        var filesMoved = 0;
-        var rawFiles = GetListOfRawFiles();
-        foreach (var rawFile in rawFiles)
-        {
-            var rawFileName = Path.GetFileNameWithoutExtension(rawFile);
-            var jpgFileName = rawFileName + ".JPG";
-            if (ShouldIMoveRaw(jpgFileName))
+        Console.OutputEncoding = Encoding.UTF8;
+        Parser.Default.ParseArguments<RawSpawOptions>(args)
+            .WithParsed<RawSpawOptions>(o =>
             {
-                MoveRawFile(rawFile, dryRun);
-                filesMoved += 1;
-            }
-        }
+                if (o.DryRun)
+                {
+                    Console.WriteLine("Dry run mode enabled. No files will be moved.");
+                }
 
-        Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
+                var filesMoved = 0;
+                var rawFiles = GetListOfRawFiles(o.RawExtension);
+                foreach (var rawFile in rawFiles)
+                {
+                    var rawFileName = Path.GetFileNameWithoutExtension(rawFile);
+                    var jpgFileName = rawFileName + "." + o.PictureExtension;
+                    if (!ShouldIMoveRaw(jpgFileName)) continue;
+                    MoveRawFile(rawFile, o.DryRun, o.Target);
+                    filesMoved += 1;
+                }
+
+                Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
+            });
     }
 }

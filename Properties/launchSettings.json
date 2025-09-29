@@ -2,12 +2,12 @@
   "profiles": {
     "rawspaw --dry-run #1": {
       "commandName": "Project",
-      "commandLineArgs": "--dry-run",
+      "commandLineArgs": "--dry-run --target=D:",
       "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\raw-spaw\\test_pack_1"
     },
     "rawspaw --dry-run #2": {
       "commandName": "Project",
-      "commandLineArgs": "--dry-run",
+      "commandLineArgs": "-d",
       "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\raw-spaw\\test_pack_2"
     },
     "rawspaw --help": {
