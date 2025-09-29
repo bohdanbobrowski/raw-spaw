@@ -9,7 +9,8 @@ It helps to minimize size of images folder, by moving RAW's for not ranked and r
 ## Usage
 
 ```bash
-RawSpaw 0.3.0+db5455ea9991e81265d50e8c6533a45d403ded33
+C:\>rawspaw --help
+RawSpaw 0.3.0+fe5838abe6e9b28a2197acfe0815cb5551ddd78a
 Copyright (C) 2025 Bohdan Bobrowski
 
   -d, --dry-run              (Default: false) Dry run.
