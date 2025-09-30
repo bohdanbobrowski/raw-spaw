@@ -45,25 +45,25 @@ internal class RawSpaw
     }
 
     private static void MoveRawFile(
-        string rawFile,
+        string rawFilePath,
         bool dryRun,
         string workingDirectory,
         string target
     )
     {
+        var rawFileName = Path.GetFileName(rawFilePath);
         var dirName = new DirectoryInfo(workingDirectory).Name;
         string[] paths = [target, dirName];
         var targetDir = Path.Combine(paths);
-        var destinationPath = Path.Combine(targetDir, rawFile);
+        var destinationPath = Path.Combine(targetDir, rawFileName);
         if (!Directory.Exists(targetDir) & !dryRun)
         {
             Console.WriteLine("Create directory: {0}", targetDir);
             Directory.CreateDirectory(targetDir);
         }
-
         if (!dryRun)
-            File.Move(rawFile, destinationPath);
-        Console.Write("{0} -> {1}\n", rawFile, destinationPath);
+            File.Move(rawFilePath, destinationPath);
+        Console.Write("{0} -> {1}\n", rawFilePath, destinationPath);
     }
 
     private static int GetRatingWithMetadataExtractor(string jpgFileName)
