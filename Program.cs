@@ -34,7 +34,6 @@ internal class RawSpaw
 {
     private static List<string> GetListOfRawFiles(string rawExtension, string workingDirectory)
     {
-        if (workingDirectory == ".") workingDirectory = Directory.GetCurrentDirectory();
         Console.WriteLine("Listing files in {0} folder", workingDirectory);
         var fileEntries = Directory.GetFiles(workingDirectory);
         return fileEntries.Where(fileName => fileName.ToUpper().EndsWith("." + rawExtension.ToUpper())).ToList();
@@ -145,6 +144,9 @@ internal class RawSpaw
             .WithParsed(o =>
             {
                 o.WorkingDirectory = o.WorkingDirectory.Trim('"');
+                if (o.WorkingDirectory == ".") o.WorkingDirectory = Directory.GetCurrentDirectory();
+                if (o.Target == ".") o.Target = o.WorkingDirectory;
+                
                 if (o.DryRun) Console.WriteLine("Dry run mode enabled. No files will be moved.");
                 var rawFiles = GetListOfRawFiles(o.RawExtension, o.WorkingDirectory);
                 if (o.Interactive)
