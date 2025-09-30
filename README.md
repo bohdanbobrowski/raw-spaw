@@ -52,7 +52,7 @@ Copyright (C) 2025 Bohdan Bobrowski
 - [X] Customizable target path
 - [X] Interactive mode
 - [X] Windows installer
-- [X] Customizable working directory and interactive mode
+- [X] Customizable working directory
 - [X] Add Windows Explorer context menu
 - [ ] Add installed program to PATH
 - [ ] Customize help text of CommandLine parser
