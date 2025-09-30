@@ -2,32 +2,31 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
+using CommandLine;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using Directory = System.IO.Directory;
-using CommandLine;
 
 
 public class RawSpawOptions
 {
-    [Option('d', "dry-run", Required = false, Default = false, HelpText = "Dry run."),]
+    [Option('d', "dry-run", Required = false, Default = false, HelpText = "Dry run.")]
     public bool DryRun { get; set; }
 
-    [Option('p', "picture-extension", Required = false, Default = "JPG", HelpText = "Picture file extension."),]
+    [Option('p', "picture-extension", Required = false, Default = "JPG", HelpText = "Picture file extension.")]
     public string PictureExtension { get; set; }
 
-    [Option('r', "raw-extension", Required = false, Default = "DNG", HelpText = "RAW file extension."),]
+    [Option('r', "raw-extension", Required = false, Default = "DNG", HelpText = "RAW file extension.")]
     public string RawExtension { get; set; }
 
-    [Option('t', "target", Required = false, Default = ".", HelpText = "Target path."),]
+    [Option('t', "target", Required = false, Default = ".", HelpText = "Target path.")]
     public string Target { get; set; }
 
-    [Option('w', "working-directory", Required = false, Default = ".", HelpText = "Working directory path."),]
+    [Option('w', "working-directory", Required = false, Default = ".", HelpText = "Working directory path.")]
     public string WorkingDirectory { get; set; }
 
-    [Option('i', "interactive", Required = false, Default = false, HelpText = "Interactive mode."),]
+    [Option('i', "interactive", Required = false, Default = false, HelpText = "Interactive mode.")]
     public bool Interactive { get; set; }
 }
 
@@ -35,10 +34,7 @@ internal class RawSpaw
 {
     private static List<string> GetListOfRawFiles(string rawExtension, string workingDirectory)
     {
-        if (workingDirectory == ".")
-        { 
-            workingDirectory = Directory.GetCurrentDirectory();
-        }
+        if (workingDirectory == ".") workingDirectory = Directory.GetCurrentDirectory();
         Console.WriteLine("Listing files in {0} folder", workingDirectory);
         var fileEntries = Directory.GetFiles(workingDirectory);
         return fileEntries.Where(fileName => fileName.ToUpper().EndsWith("." + rawExtension.ToUpper())).ToList();
@@ -61,6 +57,7 @@ internal class RawSpaw
             Console.WriteLine("Create directory: {0}", targetDir);
             Directory.CreateDirectory(targetDir);
         }
+
         if (!dryRun)
             File.Move(rawFilePath, destinationPath);
         Console.Write("{0} -> {1}\n", rawFilePath, destinationPath);
@@ -69,7 +66,7 @@ internal class RawSpaw
     private static int GetRatingWithMetadataExtractor(string jpgFileName)
     {
         IEnumerable<MetadataExtractor.Directory> directories = ImageMetadataReader.ReadMetadata(jpgFileName);
-        var exifDirectory = directories.OfType<MetadataExtractor.Formats.Exif.ExifDirectoryBase>().FirstOrDefault();
+        var exifDirectory = directories.OfType<ExifDirectoryBase>().FirstOrDefault();
         var exifRating = exifDirectory.TryGetInt32(ExifDirectoryBase.TagRating, out var eRating) ? eRating : 0;
         return exifRating == null ? 0 : exifRating;
     }
@@ -105,11 +102,8 @@ internal class RawSpaw
         }
 
         Console.Write("{0}\t{1}", jpgFileName, GetStars(exifRating));
-        if (exifRating < minimalRating)
-        {
-            return true;
-        }
-
+        if (exifRating < minimalRating) return true;
+        
         Console.Write("\n");
         return false;
     }
@@ -139,43 +133,34 @@ internal class RawSpaw
             MoveRawFile(rawFile, dryRun, workingDirectory, target);
             filesMoved += 1;
         }
+
         if (!dryRun) Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
         return filesMoved;
     }
-    
+
     private static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
         Parser.Default.ParseArguments<RawSpawOptions>(args)
-            .WithParsed<RawSpawOptions>(o =>
+            .WithParsed(o =>
             {
                 o.WorkingDirectory = o.WorkingDirectory.Trim('"');
-                if (o.DryRun)
-                {
-                    Console.WriteLine("Dry run mode enabled. No files will be moved.");
-                }
-
-                
+                if (o.DryRun) Console.WriteLine("Dry run mode enabled. No files will be moved.");
                 var rawFiles = GetListOfRawFiles(o.RawExtension, o.WorkingDirectory);
                 if (o.Interactive)
                 {
-                    var filesToMove = FileLoop(rawFiles, o.WorkingDirectory,  o.Target, o.PictureExtension, true);
+                    var filesToMove = FileLoop(rawFiles, o.WorkingDirectory, o.Target, o.PictureExtension, true);
                     Console.WriteLine("Do you want to move {0} raw files? (y/n)", filesToMove);
                     var response = Console.ReadKey(true).Key;
-                    if (response == ConsoleKey.Y)
-                    {
-                        var filesMoved = FileLoop(rawFiles, o.WorkingDirectory,  o.Target, o.PictureExtension, o.DryRun);
-                        Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
-                    }
-                    else
+                    if (response != ConsoleKey.Y)
                     {
                         Console.WriteLine("Nothing will be moved.");
+                        return;
                     }
                 }
-                else
-                {
-                    FileLoop(rawFiles, o.WorkingDirectory, o.Target, o.PictureExtension, o.DryRun);
-                }
+
+                var filesMoved = FileLoop(rawFiles, o.WorkingDirectory, o.Target, o.PictureExtension, o.DryRun);
+                Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
             });
     }
 }
