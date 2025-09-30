@@ -12,7 +12,7 @@ It helps to minimize size of images folder, by moving RAW's for not ranked and r
 
 ```bash
 C:\>rawspaw --help
-RawSpaw 0.3.0+fe5838abe6e9b28a2197acfe0815cb5551ddd78a
+RawSpaw 0.4.0+47ab510089072bef41d53bf0f983549077bd9e1b
 Copyright (C) 2025 Bohdan Bobrowski
 
   -d, --dry-run              (Default: false) Dry run.
@@ -22,6 +22,10 @@ Copyright (C) 2025 Bohdan Bobrowski
   -r, --raw-extension        (Default: DNG) RAW file extension.
 
   -t, --target               (Default: .) Target path.
+
+  -w, --working-directory    (Default: .) Working directory path.
+
+  -i, --interactive          (Default: false) Interactive mode.
 
   --help                     Display this help screen.
 
@@ -34,7 +38,7 @@ Copyright (C) 2025 Bohdan Bobrowski
 2. [MetadataExtractor](https://github.com/drewnoakes/metadata-extractor-dotnet)
 3. [TagLib](https://github.com/mono/taglib-sharp) - in cases where MetadataExtractor fails (more testing needed)
 
-## Roadmap
+## Roadmap of features
 - [X] Listing RAW files in folder
 - [X] Creating subfolder if not exists
 - [X] Reading EXIF ratings
@@ -48,6 +52,9 @@ Copyright (C) 2025 Bohdan Bobrowski
 - [X] Customizable target path
 - [X] Interactive mode
 - [X] Windows installer
+- [X] Customizable working directory and interactive mode
+- [X] Add Windows Explorer context menu
+- [ ] Add installed program to PATH
 - [ ] Customize help text of CommandLine parser
 - [ ] Automatic tests
 - [ ] Linux support and package

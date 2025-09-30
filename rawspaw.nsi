@@ -2,6 +2,7 @@
 !define VERSION "0.4.0"
 
 Name "rawspaw"
+; !include EnvVarUpdate.nsh
 
 ; To change from default installer icon:
 Icon "Assets\RawSpaw.ico"
@@ -65,12 +66,10 @@ Section "rawspaw v${VERSION} (required)"
   
 SectionEnd
 
-
-Section "Add rawspaw to PATH"
-    SetShellVarContext current
-    ; TODO: Add PATH
-SectionEnd
-
+; Section "Add rawspaw to PATH"
+;     SetShellVarContext current
+;     ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR"
+; SectionEnd
 
 Section "Add rawspaw to Windows Explorer context menu"
     SetShellVarContext current
@@ -88,6 +87,9 @@ Section "Uninstall"
 
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\rawspaw"
   DeleteRegKey HKLM SOFTWARE\rawspaw
+  
+  DeleteRegKey HKLM "Software\Classes\directory\shell\rawspaw"
+  ; ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR"
 
   Delete $INSTDIR\rawspaw.exe
   Delete $INSTDIR\uninstall.exe
