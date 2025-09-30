@@ -1,5 +1,5 @@
 ﻿; The name of the installer
-!define VERSION "0.3.1"
+!define VERSION "0.4.0"
 
 Name "rawspaw"
 
@@ -33,7 +33,12 @@ UninstPage instfiles
 
 ; The stuff to install
 Section "rawspaw v${VERSION} (required)"
-
+  
+  ; Check for write access
+  EnVar::Check "NULL" "NULL"
+  Pop $0
+  DetailPrint "EnVar::Check write access HKCU returned=|$0|"
+  
   SectionIn RO
 
   ; Set output path to the installation directory.
@@ -59,7 +64,7 @@ Section "rawspaw v${VERSION} (required)"
   WriteUninstaller "$INSTDIR\uninstall.exe"
   
   ; Adding RawSpaw to PATH variable:
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $INSTDIR
+  ; ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $INSTDIR
   
 SectionEnd
 

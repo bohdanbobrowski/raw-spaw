@@ -46,9 +46,10 @@ Copyright (C) 2025 Bohdan Bobrowski
 - [X] Add commandline parser
 - [X] Customizable picture and raw extensions
 - [X] Customizable target path
+- [X] Interactive mode
+- [X] Windows installer
 - [ ] Customize help text of CommandLine parser
 - [ ] Automatic tests
-- [ ] Windows installer
 - [ ] Linux support and package
 - [ ] MacOS support?
 

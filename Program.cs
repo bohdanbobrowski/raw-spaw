@@ -23,6 +23,9 @@ public class RawSpawOptions
 
     [Option('t', "target", Required = false, Default = ".", HelpText = "Target path."),]
     public string Target { get; set; }
+    
+    [Option('i', "interactive", Required = false, Default = false, HelpText = "Interactive mode."),]
+    public bool Interactive { get; set; }
 }
 
 internal class RawSpaw
@@ -132,6 +135,13 @@ internal class RawSpaw
                 }
 
                 Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
+
+                if (o.Interactive)
+                {
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey(); 
+                }
+                
             });
     }
 }
