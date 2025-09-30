@@ -33,12 +33,14 @@ public class RawSpawOptions
 
 internal class RawSpaw
 {
-    private static List<string> GetListOfRawFiles(string rawExtension = "DNG", string workingDirectory = ".")
+    private static List<string> GetListOfRawFiles(string rawExtension, string workingDirectory)
     {
-        var path = Directory.GetCurrentDirectory();
-        Console.WriteLine("Listing files in {0} folder", path);
+        if (workingDirectory == ".")
+        { 
+            workingDirectory = Directory.GetCurrentDirectory();
+        }
+        Console.WriteLine("Listing files in {0} folder", workingDirectory);
         var fileEntries = Directory.GetFiles(workingDirectory);
-
         return fileEntries.Where(fileName => fileName.ToUpper().EndsWith("." + rawExtension.ToUpper())).ToList();
     }
 
@@ -119,34 +121,59 @@ internal class RawSpaw
         return starsString;
     }
 
+    private static int FileLoop(
+        List<string> rawFiles,
+        string workingDirectory,
+        string target,
+        string pictureExtension,
+        bool dryRun = false
+    )
+    {
+        var filesMoved = 0;
+        foreach (var rawFile in rawFiles)
+        {
+            var rawFileName = Path.GetFileNameWithoutExtension(rawFile);
+            var jpgFileName = Path.Combine([workingDirectory, rawFileName + "." + pictureExtension]);
+            if (!ShouldIMoveRaw(jpgFileName)) continue;
+            MoveRawFile(rawFile, dryRun, workingDirectory, target);
+            filesMoved += 1;
+        }
+        if (!dryRun) Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
+        return filesMoved;
+    }
+    
     private static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
         Parser.Default.ParseArguments<RawSpawOptions>(args)
             .WithParsed<RawSpawOptions>(o =>
             {
+                o.WorkingDirectory = o.WorkingDirectory.Trim('"');
                 if (o.DryRun)
                 {
                     Console.WriteLine("Dry run mode enabled. No files will be moved.");
                 }
 
-                var filesMoved = 0;
+                
                 var rawFiles = GetListOfRawFiles(o.RawExtension, o.WorkingDirectory);
-                foreach (var rawFile in rawFiles)
-                {
-                    var rawFileName = Path.GetFileNameWithoutExtension(rawFile);
-                    var jpgFileName = rawFileName + "." + o.PictureExtension;
-                    if (!ShouldIMoveRaw(jpgFileName)) continue;
-                    MoveRawFile(rawFile, o.DryRun, o.WorkingDirectory, o.Target);
-                    filesMoved += 1;
-                }
-
-                Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
-
                 if (o.Interactive)
                 {
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey();
+                    var filesToMove = FileLoop(rawFiles, o.WorkingDirectory,  o.Target, o.PictureExtension, true);
+                    Console.WriteLine("Do you want to move {0} raw files? (y/n)", filesToMove);
+                    var response = Console.ReadKey(true).Key;
+                    if (response == ConsoleKey.Y)
+                    {
+                        var filesMoved = FileLoop(rawFiles, o.WorkingDirectory,  o.Target, o.PictureExtension, o.DryRun);
+                        Console.WriteLine("{0} files moved out of {1}", filesMoved, rawFiles.Count);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nothing will be moved.");
+                    }
+                }
+                else
+                {
+                    FileLoop(rawFiles, o.WorkingDirectory, o.Target, o.PictureExtension, o.DryRun);
                 }
             });
     }

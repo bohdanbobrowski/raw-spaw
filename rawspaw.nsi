@@ -77,7 +77,7 @@ Section "Add rawspaw to Windows Explorer context menu"
     ; CreateShortCut "$DESKTOP\rawspaw.lnk" "$INSTDIR\rawspaw.exe"
     WriteRegStr HKLM "Software\Classes\directory\shell\rawspaw" "" "Raw-Spaw"
     WriteRegStr HKLM "Software\Classes\directory\shell\rawspaw" "Icon" "$INSTDIR\rawspaw.exe"
-    WriteRegStr HKLM "Software\Classes\directory\shell\rawspaw\command" "" "$INSTDIR\rawspaw.exe -i"
+    WriteRegStr HKLM "Software\Classes\directory\shell\rawspaw\command" "" '$INSTDIR\rawspaw.exe -i -w "%1"'
 SectionEnd
 
 ;--------------------------------
