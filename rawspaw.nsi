@@ -63,24 +63,18 @@ Section "rawspaw v${VERSION} (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\rawspaw" "NoRepair" 1
   WriteUninstaller "$INSTDIR\uninstall.exe"
   
-  ; Adding RawSpaw to PATH variable:
-  ; ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $INSTDIR
-  
 SectionEnd
 
-; Optional section (can be disabled by the user)
-Section "Start Menu Shortcuts"
-  ; SectionIn RO
 
-  CreateDirectory "$SMPROGRAMS\rawspaw"
-  CreateShortcut "$SMPROGRAMS\rawspaw\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortcut "$SMPROGRAMS\rawspaw\rawspaw.lnk" "$INSTDIR\rawspaw.exe" "" "$INSTDIR\rawspaw.exe" 0
-
-SectionEnd
-
-Section "Desktop Shortcut" SectionX
+Section "Add rawspaw to PATH"
     SetShellVarContext current
-    CreateShortCut "$DESKTOP\rawspaw.lnk" "$INSTDIR\rawspaw.exe"
+    ; CreateShortCut "$DESKTOP\rawspaw.lnk" "$INSTDIR\rawspaw.exe"
+SectionEnd
+
+
+Section "Add rawspaw to Windows Explorer context menu"
+    SetShellVarContext current
+    ; CreateShortCut "$DESKTOP\rawspaw.lnk" "$INSTDIR\rawspaw.exe"
 SectionEnd
 
 ;--------------------------------
@@ -89,19 +83,11 @@ SectionEnd
 
 Section "Uninstall"
 
-  ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\rawspaw"
   DeleteRegKey HKLM SOFTWARE\rawspaw
 
-  ; Remove files and uninstaller
-  ; MAKE SURE NOT TO USE A WILDCARD. IF A
-  ; USER CHOOSES A STUPID INSTALL DIRECTORY,
-  ; YOU'LL WIPE OUT OTHER FILES TOO
   Delete $INSTDIR\rawspaw.exe
   Delete $INSTDIR\uninstall.exe
-
-  ; Remove shortcuts, if any
-  Delete "$SMPROGRAMS\rawspaw\*.*"
 
   ; Remove directories used (only deletes empty dirs)
   RMDir "$SMPROGRAMS\rawspaw"
