@@ -7,8 +7,8 @@
     },
     "rawspaw --dry-run #2": {
       "commandName": "Project",
-      "commandLineArgs": "-d -i",
-      "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\raw-spaw\\test_pack_2"
+      "commandLineArgs": "-d -i -w C:\\Users\\bohdan\\Skrypty\\csharp\\raw-spaw\\test_pack_2",
+      "workingDirectory": "C:\\Users\\bohdan\\Skrypty\\csharp\\raw-spaw"
     },
     "rawspaw --help": {
       "commandName": "Project",

@@ -45,9 +45,10 @@ internal class RawSpaw
     }
 
     private static void MoveRawFile(
-        string rawFile, bool dryRun = false,
-        string workingDirectory = ".",
-        string target = "."
+        string rawFile,
+        bool dryRun,
+        string workingDirectory,
+        string target
     )
     {
         var dirName = new DirectoryInfo(workingDirectory).Name;
