@@ -23,25 +23,32 @@ public class RawSpawOptions
 
     [Option('t', "target", Required = false, Default = ".", HelpText = "Target path."),]
     public string Target { get; set; }
-    
+
+    [Option('w', "working-directory", Required = false, Default = ".", HelpText = "Working directory path."),]
+    public string WorkingDirectory { get; set; }
+
     [Option('i', "interactive", Required = false, Default = false, HelpText = "Interactive mode."),]
     public bool Interactive { get; set; }
 }
 
 internal class RawSpaw
 {
-    private static List<string> GetListOfRawFiles(string rawExtension = "DNG")
+    private static List<string> GetListOfRawFiles(string rawExtension = "DNG", string workingDirectory = ".")
     {
         var path = Directory.GetCurrentDirectory();
         Console.WriteLine("Listing files in {0} folder", path);
-        var fileEntries = Directory.GetFiles(".");
-        
+        var fileEntries = Directory.GetFiles(workingDirectory);
+
         return fileEntries.Where(fileName => fileName.ToUpper().EndsWith("." + rawExtension.ToUpper())).ToList();
     }
 
-    private static void MoveRawFile(string rawFile, bool dryRun = false, string target = ".")
+    private static void MoveRawFile(
+        string rawFile, bool dryRun = false,
+        string workingDirectory = ".",
+        string target = "."
+    )
     {
-        var dirName = new DirectoryInfo(".").Name;
+        var dirName = new DirectoryInfo(workingDirectory).Name;
         string[] paths = [target, dirName];
         var targetDir = Path.Combine(paths);
         var destinationPath = Path.Combine(targetDir, rawFile);
@@ -124,13 +131,13 @@ internal class RawSpaw
                 }
 
                 var filesMoved = 0;
-                var rawFiles = GetListOfRawFiles(o.RawExtension);
+                var rawFiles = GetListOfRawFiles(o.RawExtension, o.WorkingDirectory);
                 foreach (var rawFile in rawFiles)
                 {
                     var rawFileName = Path.GetFileNameWithoutExtension(rawFile);
                     var jpgFileName = rawFileName + "." + o.PictureExtension;
                     if (!ShouldIMoveRaw(jpgFileName)) continue;
-                    MoveRawFile(rawFile, o.DryRun, o.Target);
+                    MoveRawFile(rawFile, o.DryRun, o.WorkingDirectory, o.Target);
                     filesMoved += 1;
                 }
 
@@ -139,9 +146,8 @@ internal class RawSpaw
                 if (o.Interactive)
                 {
                     Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey(); 
+                    Console.ReadKey();
                 }
-                
             });
     }
 }
