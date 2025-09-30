@@ -68,13 +68,16 @@ SectionEnd
 
 Section "Add rawspaw to PATH"
     SetShellVarContext current
-    ; CreateShortCut "$DESKTOP\rawspaw.lnk" "$INSTDIR\rawspaw.exe"
+    ; TODO: Add PATH
 SectionEnd
 
 
 Section "Add rawspaw to Windows Explorer context menu"
     SetShellVarContext current
     ; CreateShortCut "$DESKTOP\rawspaw.lnk" "$INSTDIR\rawspaw.exe"
+    WriteRegStr HKLM "Software\Classes\directory\shell\rawspaw" "" "Raw-Spaw"
+    WriteRegStr HKLM "Software\Classes\directory\shell\rawspaw" "Icon" "$INSTDIR\rawspaw.exe"
+    WriteRegStr HKLM "Software\Classes\directory\shell\rawspaw\command" "" "$INSTDIR\rawspaw.exe -i"
 SectionEnd
 
 ;--------------------------------
