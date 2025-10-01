@@ -1,5 +1,15 @@
 <img src="Assets/RawSpaw_logo_web.svg" width="300" />
 
+# Raw-Spaw!
+
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/bohdanbobrowski/raw-spaw/graphs/commit-activity) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) ![GitHub all releases](https://img.shields.io/github/downloads/bohdanbobrowski/raw-spaw/total) ![GitHub release (with filter)](https://img.shields.io/github/v/release/bohdanbobrowski/raw-spaw) ![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/bohdanbobrowski/raw-spaw)
+
+C sharp implementation of this [python script](https://github.com/bohdanbobrowski/python_toolbox?tab=readme-ov-file#move_not_starred).
+
+It helps to minimize size of images folder, by moving RAW's for not ranked and ranked less than 1 star JPEG's to subfolder. 
+
+## Usage
+
 ### CLI:
 
 ```bash
@@ -23,16 +33,6 @@ Copyright (C) 2025 Bohdan Bobrowski
 
   --version                  Display version information.
 ```
-
-# Raw-Spaw!
-
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/bohdanbobrowski/raw-spaw/graphs/commit-activity) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) ![GitHub all releases](https://img.shields.io/github/downloads/bohdanbobrowski/raw-spaw/total) ![GitHub release (with filter)](https://img.shields.io/github/v/release/bohdanbobrowski/raw-spaw) ![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/bohdanbobrowski/raw-spaw)
-
-C sharp implementation of this [python script](https://github.com/bohdanbobrowski/python_toolbox?tab=readme-ov-file#move_not_starred).
-
-It helps to minimize size of images folder, by moving RAW's for not ranked and ranked less than 1 star JPEG's to subfolder. 
-
-## Usage
 
 ### Windows GUI:
 
