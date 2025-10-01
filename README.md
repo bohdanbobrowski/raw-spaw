@@ -1,5 +1,29 @@
 <img src="Assets/RawSpaw_logo_web.svg" width="300" />
 
+### CLI:
+
+```bash
+rawspaw --help
+RawSpaw 0.4.0+47ab510089072bef41d53bf0f983549077bd9e1b
+Copyright (C) 2025 Bohdan Bobrowski
+
+  -d, --dry-run              (Default: false) Dry run.
+
+  -p, --picture-extension    (Default: JPG) Picture file extension.
+
+  -r, --raw-extension        (Default: DNG) RAW file extension.
+
+  -t, --target               (Default: .) Target path.
+
+  -w, --working-directory    (Default: .) Working directory path.
+
+  -i, --interactive          (Default: false) Interactive mode.
+
+  --help                     Display this help screen.
+
+  --version                  Display version information.
+```
+
 # Raw-Spaw!
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/bohdanbobrowski/raw-spaw/graphs/commit-activity) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) ![GitHub all releases](https://img.shields.io/github/downloads/bohdanbobrowski/raw-spaw/total) ![GitHub release (with filter)](https://img.shields.io/github/v/release/bohdanbobrowski/raw-spaw) ![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/bohdanbobrowski/raw-spaw)
@@ -31,30 +55,6 @@ It helps to minimize size of images folder, by moving RAW's for not ranked and r
 5. If you do this, the RAW files whose corresponding JPEG files have not been graded will be moved to a subdirectory, which you can then move to the archive or... delete.
 
 <img src="./Assets/RawSpaw_Help5.png" />
-
-### Terminal:
-
-```bash
-C:\>rawspaw --help
-RawSpaw 0.4.0+47ab510089072bef41d53bf0f983549077bd9e1b
-Copyright (C) 2025 Bohdan Bobrowski
-
-  -d, --dry-run              (Default: false) Dry run.
-
-  -p, --picture-extension    (Default: JPG) Picture file extension.
-
-  -r, --raw-extension        (Default: DNG) RAW file extension.
-
-  -t, --target               (Default: .) Target path.
-
-  -w, --working-directory    (Default: .) Working directory path.
-
-  -i, --interactive          (Default: false) Interactive mode.
-
-  --help                     Display this help screen.
-
-  --version                  Display version information.
-```
 
 ## Libraries used
 
