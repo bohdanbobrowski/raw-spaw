@@ -10,6 +10,30 @@ It helps to minimize size of images folder, by moving RAW's for not ranked and r
 
 ## Usage
 
+### Windows GUI:
+
+1. Download all images from camera to one folder:
+
+<img src="./Assets/RawSpaw_Help1.png" />
+
+2. Review JPEG's with Microsoft Photos or other application which can modify EXIF Rank tag (DigiKam, XnView, Irfan View, ACDSee... or even exiftool):
+
+<img src="./Assets/RawSpaw_Help2.png" height="300" /><img src="./Assets/RawSpaw_Help2b.png" height="200" />
+
+4. Right-click on pictures folder and select **Raw-Spaw** in context menu:
+
+<img src="./Assets/RawSpaw_Help3.png" width="400" />
+
+4. A terminal window will appear asking you to confirm, that you want to move the RAW files to a subdirectory:
+
+<img src="./Assets/RawSpaw_Help4.png" width="500" />
+
+5. If you do this, the RAW files whose corresponding JPEG files have not been graded will be moved to a subdirectory, which you can then move to the archive or... delete.
+
+<img src="./Assets/RawSpaw_Help5.png" />
+
+### Terminal:
+
 ```bash
 C:\>rawspaw --help
 RawSpaw 0.4.0+47ab510089072bef41d53bf0f983549077bd9e1b
